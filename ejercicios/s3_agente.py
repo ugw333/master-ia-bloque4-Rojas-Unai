@@ -23,12 +23,27 @@ class Herramienta:
     requiere_aprobacion: bool = False
 
 
+def preguntar_en_consola(nombre: str, args: dict) -> bool:
+    return input(f"  ¿Aprobar {nombre}({args})? [s/N] ").strip().lower() == "s"
+
+
 class Agente:
-    def __init__(self, sistema: str, herramientas: list[Herramienta], max_pasos: int = 8):
-        self.llm = anthropic.Anthropic()
+    def __init__(self, sistema: str, herramientas: list[Herramienta], max_pasos: int = 8,
+                 aprobador: Callable[[str, dict], bool] = preguntar_en_consola,
+                 verbose: bool = True):
+        self.llm = anthropic.Anthropic(max_retries=3)
         self.modelo = os.environ["ANTHROPIC_MODEL"]
         self.sistema, self.max_pasos = sistema, max_pasos
         self.herramientas = {h.nombre: h for h in herramientas}
+        self.aprobador, self.verbose = aprobador, verbose
+        # Métricas de la última ejecución (P4: medir cuánto cuesta el camino agéntico)
+        self.llamadas = self.tokens_entrada = self.tokens_salida = 0
+        self.traza: list[str] = []
+
+    def _log(self, linea: str):
+        self.traza.append(linea)
+        if self.verbose:
+            print(linea)
 
     def _definiciones(self) -> list[dict]:
         return [{"name": h.nombre, "description": h.descripcion, "input_schema": h.esquema}
@@ -39,37 +54,45 @@ class Agente:
         h = self.herramientas.get(nombre)
         if h is None:
             return f"La herramienta {nombre} no existe.", True
-        if h.requiere_aprobacion:
-            if input(f"  ¿Aprobar {nombre}({args})? [s/N] ").strip().lower() != "s":
-                return "Un operador humano ha rechazado esta acción. No la repitas.", True
+        if h.requiere_aprobacion and not self.aprobador(nombre, args):
+            return "Un operador humano ha rechazado esta acción. No la repitas.", True
         try:
-            return h.funcion(**args), False
+            salida = h.funcion(**args)
         except Exception as e:  # argumentos inventados, fallo de BD...
             return f"Error al ejecutar {nombre}: {e}", True
+        # Errores de negocio devueltos como dato ({"error": ...}) también se marcan como error
+        return salida, isinstance(salida, dict) and "error" in salida
 
     def ejecutar(self, objetivo: str) -> str:
+        self.llamadas = self.tokens_entrada = self.tokens_salida = 0
+        self.traza = []
         mensajes: list = [{"role": "user", "content": objetivo}]
         for paso in range(1, self.max_pasos + 1):
             r = self.llm.messages.create(
                 model=self.modelo, max_tokens=2048, system=self.sistema,
                 tools=self._definiciones(), messages=mensajes,
             )
+            self.llamadas += 1
+            self.tokens_entrada += r.usage.input_tokens
+            self.tokens_salida += r.usage.output_tokens
             mensajes.append({"role": "assistant", "content": r.content})
             if r.stop_reason != "tool_use":  # condición de parada: respuesta final
                 return "".join(b.text for b in r.content if b.type == "text")
             resultados = []
             for bloque in r.content:
                 if bloque.type == "text" and bloque.text.strip():
-                    print(f"[paso {paso}] razonamiento visible: {bloque.text.strip()[:100]}")
+                    self._log(f"[paso {paso}] razonamiento visible: {bloque.text.strip()[:100]}")
                 if bloque.type != "tool_use":
                     continue
                 salida, es_error = self._ejecutar(bloque.name, bloque.input)
-                print(f"[paso {paso}] {bloque.name}({bloque.input}) -> {str(salida)[:90]}")
+                marca = " (ERROR)" if es_error else ""
+                self._log(f"[paso {paso}] {bloque.name}({bloque.input}) -> {str(salida)[:90]}{marca}")
                 resultados.append({
                     "type": "tool_result", "tool_use_id": bloque.id, "is_error": es_error,
                     "content": json.dumps(salida, ensure_ascii=False, default=str),
                 })
             mensajes.append({"role": "user", "content": resultados})
+        self._log(f"[límite] {self.max_pasos} pasos agotados")
         return "He alcanzado el límite de pasos sin terminar. Paso el caso a una persona."
 
 
@@ -82,13 +105,19 @@ Procedimiento:
 3. Si preguntan por pedidos, consulta los datos reales; no inventes cifras.
 4. Termina con una respuesta breve al cliente, en español y con tono cordial."""
 
-if __name__ == "__main__":
-    herramientas = [
+
+def crear_herramientas(definiciones: list[dict] = DEFINICIONES) -> list[Herramienta]:
+    return [
         Herramienta(d["name"], d["description"], d["parameters"], FUNCIONES[d["name"]],
                     requiere_aprobacion=(d["name"] == "crear_incidencia"))
-        for d in DEFINICIONES
+        for d in definiciones
     ]
-    agente = Agente(SISTEMA, herramientas)
+
+
+if __name__ == "__main__":
+    agente = Agente(SISTEMA, crear_herramientas())
     correo = ("Buenas, os escribo del Restaurante Lumbre. La cafetera de dos grupos no "
               "calienta y hoy no podemos servir cafés. ¿Además, cuándo llega el pedido pendiente?")
     print(agente.ejecutar(correo))
+    print(f"\n[métricas] {agente.llamadas} llamadas, "
+          f"{agente.tokens_entrada} tokens de entrada, {agente.tokens_salida} de salida")
