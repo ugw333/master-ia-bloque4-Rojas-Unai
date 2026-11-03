@@ -1,0 +1,111 @@
+
+### Caso 1 (esperado: pedido): Necesito 20 kg del blend de hostelería para el viernes. Bar La Esquina.
+  [solo agente] {'anthropic/claude-haiku-4.5': [2, 2528, 283]}
+    'Perfecto, **Bar La Esquina**. Buenas noticias:\n\n✅ **Stock disponible**: Tenemos **340 kg** del **Café blend hostelería** (CAF-002)  \n✅ **Precio**: 16,90 €/kg  \n'
+  [enrutador · google/gemini-3.8-flash] tipo=pedido camino=agente {'openai/gpt-5.4-mini': [1, 262, 67], 'anthropic/claude-haiku-4.5': [3, 3805, 355]}
+    'Excelente, tenemos disponibilidad. \n\n**Resumen:**\n- **Cliente:** Bar La Esquina (Retiro)\n- **Producto:** Café blend hostelería (CAF-002)\n- **Cantidad solicitada'
+  [enrutador · openai/gpt-5.4-nano] tipo=pedido camino=agente {'openai/gpt-5.4-mini': [1, 262, 67], 'anthropic/claude-haiku-4.5': [2, 2529, 309]}
+    'Perfecto, Bar La Esquina. Te confirmo que tenemos disponibilidad:\n\n**Café blend hostelería 1 kg** (SKU: CAF-002)\n- Precio: 16,90 €/kg\n- Stock disponible: 340 kg'
+
+### Caso 2 (esperado: incidencia): El molino hace un ruido raro desde ayer, ¿podéis venir? Panadería Ibiza
+  [solo agente] {'anthropic/claude-haiku-4.5': [2, 2407, 205]}
+    'Perfecto, ya tengo identificado al cliente. Ahora necesito un poco más de información para registrar la incidencia:\n\n**¿Cuál es el modelo o SKU del molino?** (p'
+  [enrutador · google/gemini-3.8-flash] tipo=incidencia camino=agente {'openai/gpt-5.4-mini': [1, 259, 51], 'anthropic/claude-haiku-4.5': [3, 3859, 337]}
+    '¡Listo! He registrado la incidencia **#11** de tu molino. Nuestro equipo técnico revisará el ruido que comenta y se pondrá en contacto contigo para programar la'
+  [enrutador · openai/gpt-5.4-nano] tipo=incidencia camino=agente {'openai/gpt-5.4-mini': [1, 259, 52], 'anthropic/claude-haiku-4.5': [3, 3861, 378]}
+    '¡Perfecto! He registrado la avería del molino para **Panadería Ibiza**.\n\n**Detalles de la incidencia:**\n- **ID:** 12\n- **Estado:** Abierta\n- **Descripción:** Mo'
+
+### Caso 3 (esperado: consulta): ¿Tenéis café descafeinado de especialidad?
+  [solo agente] {'anthropic/claude-haiku-4.5': [2, 2519, 304]}
+    'Sí, contamos con **Café descafeinado 1 kg** (SKU: CAF-003) a **19,80 €** con **45 unidades en stock**.\n\nSin embargo, en nuestro catálogo actual no aparece espec'
+  [enrutador · google/gemini-3.8-flash] tipo=consulta camino=barato {'openai/gpt-5.4-mini': [1, 253, 46], 'google/gemini-3.8-flash': [1, 344, 952]}
+    '¡Hola! En nuestro catálogo disponemos de Café descafeinado de 1 kg (CAF-003) por 19.80 € sin IVA. Como no cuento con el detalle de si cuenta con la consideració'
+  [enrutador · openai/gpt-5.4-nano] tipo=consulta camino=barato {'openai/gpt-5.4-mini': [1, 253, 46], 'openai/gpt-5.4-nano': [1, 310, 79]}
+    'Hola, sí: disponemos de café descafeinado en bolsa de 1 kg (CAF-003) por 19.80 € (sin IVA). Si te interesa, también tenemos café de especialidad Etiopía 1 kg (C'
+
+### Caso 4 (esperado: mixto): Mandadme 5 kg de Etiopía y, de paso, la cafetera gotea. Lumbre.
+  [solo agente] {'anthropic/claude-haiku-4.5': [2, 2562, 317]}
+    'Perfecto. Tengo el Etiopía disponible. Ahora bien, para la cafetera que gotea, necesito que me confirmes el modelo o SKU de la máquina (por ejemplo, MAQ-010) pa'
+  [enrutador · google/gemini-3.8-flash] tipo=mixto camino=agente {'openai/gpt-5.4-mini': [1, 267, 65], 'anthropic/claude-haiku-4.5': [3, 4029, 458]}
+    'Perfecto, Lumbre:\n\n✅ **Café de Etiopía**: Tenemos disponible el "Café de especialidad Etiopía 1 kg" a 24,50 €. Para 5 kg necesitarías 5 unidades (total 122,50 €'
+  [enrutador · openai/gpt-5.4-nano] tipo=mixto camino=agente {'openai/gpt-5.4-mini': [1, 267, 65], 'anthropic/claude-haiku-4.5': [3, 4008, 429]}
+    'Hecho, Lumbre:\n\n✅ **Café Etiopía**: Tenemos stock disponible. Son 5 kg, así que serían 5 unidades de 1 kg (CAF-001) a 24,50€ cada una = **122,50€ total**.\n\n✅ **'
+
+### Caso 5 (esperado: pedido): URGENTE: sin café para mañana, 10 kg de blend. Hotel Prado Suites
+  [solo agente] {'anthropic/claude-haiku-4.5': [3, 3758, 327]}
+    '---\n\n**Respuesta al cliente:**\n\n¡Buenos días Hotel Prado Suites!\n\nBuena noticia: **contamos con 340 kg de stock** de nuestro Café blend hostelería (CAF-002) a 1'
+  [enrutador · google/gemini-3.8-flash] tipo=pedido camino=agente {'openai/gpt-5.4-mini': [1, 259, 60], 'anthropic/claude-haiku-4.5': [2, 2523, 327]}
+    'Excelente noticia: **tenemos stock disponible**. Disponemos de 340 kg de Café blend hostelería (CAF-002) en almacén.\n\n**Resumen:**\n- **Cliente:** Hotel Prado Su'
+  [enrutador · openai/gpt-5.4-nano] tipo=pedido camino=agente {'openai/gpt-5.4-mini': [1, 259, 57], 'anthropic/claude-haiku-4.5': [2, 2522, 250]}
+    'Excelente: tenemos disponibles 340 kilos del **Café blend hostelería** (CAF-002) a 16,90 €/kg. \n\nPara los 10 kg que necesitas:\n- **Total: 169 €**\n- **Stock disp'
+
+### Caso 6 (esperado: consulta): Buenas, ¿la factura de septiembre ya está emitida?
+  [solo agente] {'anthropic/claude-haiku-4.5': [1, 1128, 70]}
+    'Hola, para ayudarte con tu consulta sobre la factura de septiembre necesito identificar tu cuenta.\n\n¿Cuál es tu nombre o el nombre de tu empresa? Con esa inform'
+  [enrutador · google/gemini-3.8-flash] tipo=consulta camino=barato {'openai/gpt-5.4-mini': [1, 254, 44], 'google/gemini-3.8-flash': [1, 344, 443]}
+    '¡Hola! Paso tu consulta sobre la factura de septiembre a nuestro equipo para que puedan revisarlo en tu cuenta. Te responderán hoy mismo con la información. ¡Un'
+  [enrutador · openai/gpt-5.4-nano] tipo=consulta camino=barato {'openai/gpt-5.4-mini': [1, 254, 44], 'openai/gpt-5.4-nano': [1, 311, 49]}
+    '¡Hola! Gracias por escribirnos. Para confirmarte si la factura de septiembre ya está emitida necesito revisar datos de tu cuenta (y no los tengo aquí). Te lo pa'
+
+### Caso 7 (esperado: consulta): ¿Qué precio tiene la cafetera de dos grupos?
+  [solo agente] {'anthropic/claude-haiku-4.5': [2, 2353, 182]}
+    'La búsqueda no devolvió resultados con ese término. ¿Podrías proporcionarme:\n\n- El **SKU o código** de la cafetera (por ejemplo, MAQ-010)\n- O algún **nombre más'
+  [enrutador · google/gemini-3.8-flash] tipo=consulta camino=barato {'openai/gpt-5.4-mini': [1, 252, 45], 'google/gemini-3.8-flash': [1, 344, 558]}
+    '¡Hola! La cafetera espresso de 2 grupos (MAQ-010) tiene un precio de 2890,00 € sin IVA. Si necesitas información sobre cualquier otro producto de nuestro catálo'
+  [enrutador · openai/gpt-5.4-nano] tipo=consulta camino=barato {'openai/gpt-5.4-mini': [1, 252, 45], 'openai/gpt-5.4-nano': [1, 309, 50]}
+    'La cafetera espresso de 2 grupos (MAQ-010) tiene un precio de 2.890,00 € (sin IVA). Si quieres, también te indico opciones de café compatibles según tu tipo de '
+
+### Caso 8 (esperado: consulta): ¿Hacéis envíos fuera de Madrid?
+  [solo agente] {'anthropic/claude-haiku-4.5': [1, 1124, 216]}
+    'Entiendo tu pregunta sobre envíos fuera de Madrid. Lamentablemente, con las herramientas que tengo disponibles no puedo consultar información sobre las zonas de'
+  [enrutador · google/gemini-3.8-flash] tipo=consulta camino=barato {'openai/gpt-5.4-mini': [1, 252, 43], 'google/gemini-3.8-flash': [1, 343, 558]}
+    '¡Hola! Paso tu consulta al equipo para que puedan confirmarte si realizamos envíos fuera de Madrid. Te responderán hoy mismo con todos los detalles. ¡Un saludo!'
+  [enrutador · openai/gpt-5.4-nano] tipo=consulta camino=barato {'openai/gpt-5.4-mini': [1, 252, 43], 'openai/gpt-5.4-nano': [1, 309, 33]}
+    '¡Hola! En este momento no tengo la información sobre envíos fuera de Madrid. Te paso la consulta al equipo y te responderán hoy.'
+
+### Caso 9 (esperado: consulta): ¿Revisáis las máquinas en agosto?
+  [solo agente] {'anthropic/claude-haiku-4.5': [1, 1123, 199]}
+    'Entiendo tu pregunta, pero necesito más contexto para ayudarte correctamente.\n\nPara poder informarte sobre revisiones de máquinas en agosto, me gustaría saber:\n'
+  [enrutador · google/gemini-3.8-flash] tipo=consulta camino=barato {'openai/gpt-5.4-mini': [1, 251, 42], 'google/gemini-3.8-flash': [1, 342, 507]}
+    '¡Hola! No dispongo de esa información sobre el servicio técnico en agosto, por lo que paso tu consulta directamente a nuestro equipo. Te responderán hoy mismo c'
+  [enrutador · openai/gpt-5.4-nano] tipo=consulta camino=barato {'openai/gpt-5.4-mini': [1, 251, 43], 'openai/gpt-5.4-nano': [1, 308, 55]}
+    '¡Hola! Gracias por tu consulta. En el catálogo con el que contamos no aparece información sobre revisiones o mantenimientos en agosto, así que no puedo confirmá'
+
+### Caso 10 (esperado: consulta): Hola, ¿qué orígenes de café en grano tenéis ahora mismo?
+  [solo agente] {'anthropic/claude-haiku-4.5': [1, 1133, 216]}
+    'Hola, gracias por contactar con nosotros.\n\nLamentablemente, las herramientas de las que dispongo están orientadas a la gestión de pedidos, incidencias y máquina'
+  [enrutador · google/gemini-3.8-flash] tipo=consulta camino=barato {'openai/gpt-5.4-mini': [1, 259, 48], 'google/gemini-3.8-flash': [1, 347, 913]}
+    '¡Hola! Actualmente disponemos de café de especialidad de Etiopía a 24,50 € el kilo (sin IVA), además de nuestro café blend hostelería a 16,90 € y café descafein'
+  [enrutador · openai/gpt-5.4-nano] tipo=consulta camino=barato {'openai/gpt-5.4-mini': [1, 259, 48], 'openai/gpt-5.4-nano': [1, 316, 102]}
+    'Hola 😊 En el catálogo que tengo ahora mismo aparecen estos cafés en grano: Etiopía 1 kg (CAF-001) a 24,50 € y un blend de hostelería 1 kg (CAF-002) a 16,90 €, a'
+
+### Caso 11 (esperado: consulta): Hotel Prado Suites: ¿cuándo llega nuestro último pedido?
+  [solo agente] {'anthropic/claude-haiku-4.5': [3, 3753, 256]}
+    '**Respuesta:**\n\nEstimado Hotel Prado Suites,\n\nSu último pedido (nº 1002) está **en reparto** desde el 25 de septiembre por un total de 1.225 €. Debe llegar en l'
+  [enrutador · google/gemini-3.8-flash] tipo=consulta camino=barato {'openai/gpt-5.4-mini': [1, 254, 42], 'google/gemini-3.8-flash': [1, 345, 576]}
+    '¡Hola! Paso tu consulta sobre el estado de vuestro último pedido al equipo para que lo revisen en el sistema. Te responderán hoy mismo con todos los detalles de'
+  [enrutador · openai/gpt-5.4-nano] tipo=consulta camino=barato {'openai/gpt-5.4-mini': [1, 254, 42], 'openai/gpt-5.4-nano': [1, 311, 56]}
+    '¡Hola! Gracias por escribirnos. Para indicarte cuándo llega el último pedido del Hotel Prado Suites necesito los datos de tu pedido (entrega/seguimiento), que n'
+
+### Caso 12 (esperado: incidencia): La cafetera de Cafetería Atocha 12 pierde presión y el café sale aguado.
+  [solo agente] {'anthropic/claude-haiku-4.5': [3, 3879, 374]}
+    '✅ **Incidencia registrada correctamente**\n\nHemos registrado la avería de la cafetera de **Cafetería Atocha 12** con **prioridad alta** (ref. #15). \n\nEl problema'
+  [enrutador · google/gemini-3.8-flash] tipo=incidencia camino=agente {'openai/gpt-5.4-mini': [1, 263, 53], 'anthropic/claude-haiku-4.5': [3, 3858, 340]}
+    '✓ **Incidencia registrada correctamente**\n\nHemos abierto la incidencia **#16** con **prioridad alta** para Cafetería Atocha 12. Nuestro equipo técnico se pondrá'
+  [enrutador · openai/gpt-5.4-nano] tipo=incidencia camino=agente {'openai/gpt-5.4-mini': [1, 263, 62], 'anthropic/claude-haiku-4.5': [3, 3892, 390]}
+    '---\n\n**Respuesta al cliente:**\n\nHola,\n\nHemos registrado la incidencia en tu cafetera (pérdida de presión). Te hemos asignado **prioridad alta** para que nuestro'
+
+==============================================================================
+RESUMEN (12 correos)
+==============================================================================
+Estrategia                               llamadas  tok entrada  tok salida       USD
+Todo al agente                                 23        28267        2949   0.04301
+Enrutador (barato = google/gemini-3.8-flash)       33        23568        6930   0.05278
+Enrutador (barato = openai/gpt-5.4-nano)       32        22071        2794   0.03163
+
+Clasificación (con_openai): 12 / 12 tipos correctos
+Correos por el camino barato: 7 / 12
+
+Solo consultas (camino barato) — tokens de salida por modelo:
+  google/gemini-3.8-flash        4507 tokens de salida (644 por consulta)
+  openai/gpt-5.4-nano             424 tokens de salida (61 por consulta)
