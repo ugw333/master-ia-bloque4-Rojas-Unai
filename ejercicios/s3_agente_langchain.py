@@ -1,5 +1,9 @@
-"""Sesión 3. El mismo agente con LangChain 1.x: create_agent + middleware."""
+"""Sesión 3. El mismo agente con LangChain 1.x: create_agent + middleware.
+
+Uso: python s3_agente_langchain.py [modelo]
+     p. ej. python s3_agente_langchain.py openai:google/gemini-3.8-flash"""
 import os
+import sys
 from typing import Literal
 
 from dotenv import load_dotenv
@@ -34,8 +38,10 @@ def crear_incidencia(cliente_id: int, maquina: str, descripcion: str,
     return h.crear_incidencia(cliente_id, maquina, descripcion, prioridad)
 
 
+MODELO = sys.argv[1] if len(sys.argv) > 1 else f"anthropic:{os.environ['ANTHROPIC_MODEL']}"
+
 agente = create_agent(
-    model=f"anthropic:{os.environ['ANTHROPIC_MODEL']}",  # o "openai:google/gemini-3.8-flash"
+    model=MODELO,  # o "openai:google/gemini-3.8-flash": cambiar de proveedor es una cadena
     tools=[buscar_cliente, consultar_pedidos, crear_incidencia],
     system_prompt=SISTEMA,
     middleware=[
@@ -46,6 +52,7 @@ agente = create_agent(
 )
 
 if __name__ == "__main__":
+    print(f"Modelo: {MODELO}")
     config = {"configurable": {"thread_id": "correo-lumbre-001"}}
     correo = ("Os escribo del Restaurante Lumbre: la cafetera de dos grupos no calienta "
               "y hoy no podemos servir cafés.")
@@ -56,4 +63,8 @@ if __name__ == "__main__":
             ok = input(f"¿Aprobar {peticion['name']}({peticion['args']})? [s/N] ").lower() == "s"
             decisiones.append({"type": "approve" if ok else "reject"})
         estado = agente.invoke(Command(resume={"decisions": decisiones}), config)
+    # Traza: la reconstruimos a posteriori a partir del estado del grafo
+    for m in estado["messages"]:
+        for llamada in getattr(m, "tool_calls", []) or []:
+            print(f"[traza] {llamada['name']}({llamada['args']})")
     print(estado["messages"][-1].text)
