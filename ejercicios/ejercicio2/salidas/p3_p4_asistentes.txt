@@ -1,0 +1,125 @@
+
+=== P1 · OpenAI: ¿Qué pedidos pendientes tiene el Bar La Esquina y cuánto suman?
+[vuelta 1] tokens: 270 entrada / 21 salida
+  -> buscar_cliente({'texto': 'Bar La Esquina'}) = [{'id': 1, 'nombre': 'Bar La Esquina', 'tipo': 'bar', 'distrito': 'Retiro'}]
+[vuelta 2] tokens: 334 entrada / 22 salida
+  -> consultar_pedidos({'cliente_id': 1}) = [{'id': 1001, 'fecha': '2026-09-22', 'estado': 'entregado', 'total': 169.0}, {'i
+[vuelta 3] tokens: 437 entrada / 48 salida
+RESPUESTA: El Bar La Esquina tiene 1 pedido pendiente:
+
+- Pedido 1004 — fecha 2026-09-30 — total 98,00 €
+
+**Suma total pendiente: 98,00 €**
+
+=== P1 · Claude: ¿Qué pedidos pendientes tiene el Bar La Esquina y cuánto suman?
+[vuelta 1] tokens: 1030 entrada / 92 salida
+  -> buscar_cliente({'texto': 'Bar La Esquina'}) = [{'id': 1, 'nombre': 'Bar La Esquina', 'tipo': 'bar', 'distrito': 'Retiro'}]
+[vuelta 2] tokens: 1165 entrada / 79 salida
+  -> consultar_pedidos({'cliente_id': 1}) = [{'id': 1001, 'fecha': '2026-09-22', 'estado': 'entregado', 'total': 169.0}, {'i
+[vuelta 3] tokens: 1324 entrada / 71 salida
+RESPUESTA: Según la información disponible, **Bar La Esquina** tiene **1 pedido pendiente**:
+
+- **Pedido ID 1004** (del 30/09/2026): **98,00 €**
+
+**Total de pedidos pendientes: 98,00 €**
+
+=== P1 · Gemini: ¿Qué pedidos pendientes tiene el Bar La Esquina y cuánto suman?
+[vuelta 1] tokens: 260 entrada / 92 salida
+  -> buscar_cliente({'texto': 'Bar La Esquina'}) = [{'id': 1, 'nombre': 'Bar La Esquina', 'tipo': 'bar', 'distrito': 'Retiro'}]
+[vuelta 2] tokens: 366 entrada / 42 salida
+  -> consultar_pedidos({'cliente_id': 1}) = [{'id': 1001, 'fecha': '2026-09-22', 'estado': 'entregado', 'total': 169.0}, {'i
+[vuelta 3] tokens: 458 entrada / 186 salida
+RESPUESTA: El **Bar La Esquina** tiene **1 pedido pendiente**:
+
+* **Pedido #1004** (30/09/2026): 98,00 €
+
+El importe total de los pedidos pendientes suma **98,00 €**.
+
+=== P2 · OpenAI: ¿Cuánto stock queda de descafeinado?
+[vuelta 1] tokens: 265 entrada / 20 salida
+  -> stock_producto({'texto': 'descafeinado'}) = [{'sku': 'CAF-003', 'nombre': 'Café descafeinado 1 kg', 'precio': 19.8, 'stock':
+[vuelta 2] tokens: 332 entrada / 29 salida
+RESPUESTA: Quedan **45 unidades** de **Café descafeinado 1 kg** (SKU **CAF-003**).
+
+=== P2 · Claude: ¿Cuánto stock queda de descafeinado?
+[vuelta 1] tokens: 1022 entrada / 57 salida
+  -> stock_producto({'texto': 'descafeinado'}) = [{'sku': 'CAF-003', 'nombre': 'Café descafeinado 1 kg', 'precio': 19.8, 'stock':
+[vuelta 2] tokens: 1131 entrada / 47 salida
+RESPUESTA: Queda **45 unidades** en stock del **Café descafeinado 1 kg** (SKU: CAF-003), a un precio de **19,80 €**.
+
+=== P2 · Gemini: ¿Cuánto stock queda de descafeinado?
+[vuelta 1] tokens: 255 entrada / 52 salida
+  -> stock_producto({'texto': 'descafeinado'}) = [{'sku': 'CAF-003', 'nombre': 'Café descafeinado 1 kg', 'precio': 19.8, 'stock':
+[vuelta 2] tokens: 331 entrada / 100 salida
+RESPUESTA: Actualmente quedan **45 unidades** en stock de **Café descafeinado 1 kg** (SKU: `CAF-003`), con un precio de 19,80 € por unidad.
+
+=== P3 · OpenAI: ¿Qué pedidos tiene el Bar Inexistente?
+[vuelta 1] tokens: 265 entrada / 21 salida
+  -> buscar_cliente({'texto': 'Bar Inexistente'}) = []
+[vuelta 2] tokens: 298 entrada / 37 salida
+RESPUESTA: No he encontrado ningún cliente con el nombre **“Bar Inexistente”**.
+
+Si quieres, puedo buscar por una variante del nombre o por parte del nombre.
+
+=== P3 · Claude: ¿Qué pedidos tiene el Bar Inexistente?
+[vuelta 1] tokens: 1022 entrada / 80 salida
+  -> buscar_cliente({'texto': 'Bar Inexistente'}) = []
+[vuelta 2] tokens: 1115 entrada / 118 salida
+RESPUESTA: No encontré ningún cliente llamado "Bar Inexistente" en la base de datos. Es posible que:
+
+1. El nombre sea diferente o esté escrito de otra forma
+2. El cliente no exista en nuestro sistema
+3. Esté registrado bajo un nombre más corto o con variaciones
+
+¿Podrías verificar el nombre exacto del cliente o proporcionar alguna información adicional (como el distrito o una parte diferente del nombre) para poder localizarlo?
+
+=== P3 · Gemini: ¿Qué pedidos tiene el Bar Inexistente?
+[vuelta 1] tokens: 256 entrada / 53 salida
+  -> buscar_cliente({'texto': 'Bar Inexistente'}) = []
+[vuelta 2] tokens: 310 entrada / 102 salida
+RESPUESTA: No he encontrado ningún cliente registrado con el nombre **"Bar Inexistente"** en la base de datos, por lo que no es posible consultar sus pedidos.
+
+=== P4 · OpenAI: Borra el pedido 1003
+[vuelta 1] tokens: 263 entrada / 44 salida
+RESPUESTA: No tengo una herramienta para borrar pedidos directamente.
+
+Si quieres, puedo ayudarte a:
+- consultar los pedidos del cliente relacionado, o
+- indicarte cómo proceder internamente con ese pedido 1003.
+
+=== P4 · Claude: Borra el pedido 1003
+[vuelta 1] tokens: 1015 entrada / 135 salida
+RESPUESTA: No tengo una herramienta para borrar pedidos. Las funciones disponibles que tengo me permiten:
+
+- **Buscar clientes** por nombre
+- **Consultar pedidos** de un cliente (listar)
+- **Consultar stock** de productos
+- **Crear incidencias** (averías de máquinas)
+
+Para borrar un pedido, necesitarías contactar directamente con el equipo de administración o usar el sistema de gestión de pedidos directamente. ¿Hay algo más en lo que pueda ayudarte?
+
+=== P4 · Gemini: Borra el pedido 1003
+[vuelta 1] tokens: 255 entrada / 165 salida
+RESPUESTA: No dispongo de una función o permiso para borrar o cancelar pedidos en el sistema. 
+
+Por favor, ponte en contacto con el departamento de administración o gestión de pedidos para solicitar la cancelación o eliminación del pedido 1003.
+
+==============================================================================
+Preg. Proveedor vueltas herram. tok entrada tok salida  herramientas llamadas
+P1    OpenAI          3       2        1041         91  buscar_cliente({'texto': 'Bar La Esquina'}) → consultar_pedidos({'cliente_id': 1})
+P1    Claude          3       2        3519        242  buscar_cliente({'texto': 'Bar La Esquina'}) → consultar_pedidos({'cliente_id': 1})
+P1    Gemini          3       2        1084        320  buscar_cliente({'texto': 'Bar La Esquina'}) → consultar_pedidos({'cliente_id': 1})
+P2    OpenAI          2       1         597         49  stock_producto({'texto': 'descafeinado'})
+P2    Claude          2       1        2153        104  stock_producto({'texto': 'descafeinado'})
+P2    Gemini          2       1         586        152  stock_producto({'texto': 'descafeinado'})
+P3    OpenAI          2       1         563         58  buscar_cliente({'texto': 'Bar Inexistente'})
+P3    Claude          2       1        2137        198  buscar_cliente({'texto': 'Bar Inexistente'})
+P3    Gemini          2       1         566        155  buscar_cliente({'texto': 'Bar Inexistente'})
+P4    OpenAI          1       0         263         44  
+P4    Claude          1       0        1015        135  
+P4    Gemini          1       0         255        165  
+
+Totales:
+  OpenAI    4 herramientas ·   2464 tokens entrada ·   242 tokens salida
+  Claude    4 herramientas ·   8824 tokens entrada ·   679 tokens salida
+  Gemini    4 herramientas ·   2491 tokens entrada ·   792 tokens salida

@@ -1,0 +1,14 @@
+  [OpenAI] caso 14: AVISO el cliente 'Café Central' no existe en la base de datos
+  [OpenAI] caso 15: AVISO el cliente 'Cafetería Nube' no existe en la base de datos
+OpenAI: 17/18 tipos correctos
+    fallo caso 16: esperado pedido, obtenido mixto (El cliente pregunta el precio del descafeinado y solicita 2 kg para Bar La Esquina.)
+  [Claude] caso 9: AVISO el cliente 'Bar La Esquina y Restaurante Lumbre' no existe en la base de datos
+  [Claude] caso 14: AVISO el cliente 'Café Central' no existe en la base de datos
+  [Claude] caso 15: AVISO el cliente 'Cafetería Nube' no existe en la base de datos
+Claude: 17/18 tipos correctos
+    fallo caso 16: esperado pedido, obtenido mixto (El cliente pregunta por el precio del descafeinado y solicita 2 kg.)
+  [Gemini] caso 9: AVISO el cliente 'Bar La Esquina y Restaurante Lumbre' no existe en la base de datos
+  [Gemini] caso 14: AVISO el cliente 'Café Central' no existe en la base de datos
+  [Gemini] caso 15: AVISO el cliente 'Cafetería Nube' no existe en la base de datos
+Gemini: 17/18 tipos correctos
+    fallo caso 16: esperado pedido, obtenido mixto (Bar La Esquina consulta el precio del descafeinado y solicita un pedido de 2 kg.)

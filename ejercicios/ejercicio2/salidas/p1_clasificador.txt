@@ -1,0 +1,11 @@
+  [OpenAI] caso 14: AVISO el cliente 'Café Central' no existe en la base de datos
+  [OpenAI] caso 15: AVISO el cliente 'Cafetería Nube' no existe en la base de datos
+OpenAI: 18/18 tipos correctos
+  [Claude] caso 9: AVISO el cliente 'Bar La Esquina / Restaurante Lumbre' no existe en la base de datos
+  [Claude] caso 14: AVISO el cliente 'Café Central' no existe en la base de datos
+  [Claude] caso 15: AVISO el cliente 'Cafetería Nube' no existe en la base de datos
+Claude: 18/18 tipos correctos
+  [Gemini] caso 9: AVISO el cliente 'Bar La Esquina y Restaurante Lumbre' no existe en la base de datos
+  [Gemini] caso 14: AVISO el cliente 'Café Central' no existe en la base de datos
+  [Gemini] caso 15: AVISO el cliente 'Cafetería Nube' no existe en la base de datos
+Gemini: 18/18 tipos correctos

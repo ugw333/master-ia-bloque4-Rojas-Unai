@@ -11,8 +11,9 @@ y con un enrutador delante (P4). Modelo del agente: `anthropic/claude-haiku-4.5`
 | `s3_enrutador.py` | P4. Clasificador de la sesión 2 + camino barato + agente, con medición |
 | `salidas/` | Trazas reales de cada ejecución |
 
-Los scripts se ejecutan desde la raíz de `Master-Bloque4` (importan `herramientas.py`,
-`llm_client.py` y `s2_extraer_correo.py`).
+Los scripts importan `herramientas.py`, `llm_client.py` y `s2_extraer_correo.py`. Para
+ejecutarlos, cópialos a la raíz junto a esos ficheros y `tostadero.db` (como indica el kit:
+todo junto).
 
 ---
 
