@@ -1,0 +1,242 @@
+
+==============================================================================
+MANTENER=6 · UMBRAL_TOKENS=1000
+==============================================================================
+  turno  1:    96 tokens de entrada ·  2 mensajes
+  turno  2:   256 tokens de entrada ·  4 mensajes
+  turno  3:   475 tokens de entrada ·  6 mensajes
+  turno  4:   639 tokens de entrada ·  8 mensajes
+  turno  5:   827 tokens de entrada · 10 mensajes
+  turno  6:  1005 tokens de entrada · 12 mensajes
+  turno  7:   787 tokens de entrada · 10 mensajes  (historial compactado)
+  turno  8:   945 tokens de entrada · 12 mensajes
+  turno  9:   935 tokens de entrada · 10 mensajes  (historial compactado)
+  turno 10:   924 tokens de entrada · 10 mensajes  (historial compactado)
+  turno 11:  1069 tokens de entrada · 10 mensajes  (historial compactado)
+  turno 12:  1120 tokens de entrada · 10 mensajes  (historial compactado)
+
+  Respuesta al turno 12:
+  Perfecto, aquí está el resumen:
+
+- **Tú:** Marta Gil
+- **Hotel:** Prado Suites
+- **Pedido semanal:** 30 kg de **Café Etiopía**
+- **Entrega:** Próximo **martes antes de las 9:00** (pendiente de confirmación)
+
+---
+
+**Aún faltan datos tuyos:**
+- Email de facturación
+- Teléfono
+- Dirección exacta del hotel
+
+Y **temas abiertos:**
+- ¿Añades descafeinado?
+- ¿Quieres ver opciones ecológicas?
+
+¿Los cierras hoy?
+
+  Datos del turno 1 que sobreviven: {'nombre': True, 'hotel': True, 'cantidad': True, 'café': True, 'día': True, 'hora': True}
+
+==============================================================================
+MANTENER=2 · UMBRAL_TOKENS=1000
+==============================================================================
+  turno  1:    96 tokens de entrada ·  2 mensajes
+  turno  2:   247 tokens de entrada ·  4 mensajes
+  turno  3:   465 tokens de entrada ·  6 mensajes
+  turno  4:   622 tokens de entrada ·  8 mensajes
+  turno  5:   824 tokens de entrada · 10 mensajes
+  turno  6:  1000 tokens de entrada · 12 mensajes
+  turno  7:   374 tokens de entrada ·  6 mensajes  (historial compactado)
+  turno  8:   584 tokens de entrada ·  8 mensajes
+  turno  9:   846 tokens de entrada · 10 mensajes
+  turno 10:   591 tokens de entrada ·  6 mensajes  (historial compactado)
+  turno 11:   877 tokens de entrada ·  8 mensajes
+  turno 12:   649 tokens de entrada ·  6 mensajes  (historial compactado)
+
+  Respuesta al turno 12:
+  Claro:
+
+🏨 **Hotel:** Prado Suites
+👤 **Tú:** Marta Gil
+☕ **Café:** Etiopía
+📦 **Cantidad:** 30 kg semanales
+📅 **Entrega:** Martes antes de las 9:00
+
+¿Todo correcto?
+
+  Datos del turno 1 que sobreviven: {'nombre': True, 'hotel': True, 'cantidad': True, 'café': True, 'día': True, 'hora': True}
+
+==============================================================================
+MANTENER=10 · UMBRAL_TOKENS=1000
+==============================================================================
+  turno  1:    96 tokens de entrada ·  2 mensajes
+  turno  2:   278 tokens de entrada ·  4 mensajes
+  turno  3:   502 tokens de entrada ·  6 mensajes
+  turno  4:   672 tokens de entrada ·  8 mensajes
+  turno  5:   846 tokens de entrada · 10 mensajes
+  turno  6:  1071 tokens de entrada · 12 mensajes
+  turno  7:  1266 tokens de entrada · 14 mensajes  (historial compactado)
+  turno  8:  1386 tokens de entrada · 14 mensajes  (historial compactado)
+  turno  9:  1535 tokens de entrada · 14 mensajes  (historial compactado)
+  turno 10:  1629 tokens de entrada · 14 mensajes  (historial compactado)
+  turno 11:  1716 tokens de entrada · 14 mensajes  (historial compactado)
+  turno 12:  1806 tokens de entrada · 14 mensajes  (historial compactado)
+
+  Respuesta al turno 12:
+  **Tus datos:**
+
+- **Tú**: Marta Gil, Jefa de Compras
+- **Hotel**: Prado Suites
+- **Café**: Etiopía
+- **Cantidad**: 30 kg semanales
+- **Día entrega**: Martes
+- **Hora**: Antes de las 09:00
+
+¿Todo correcto?
+
+  Datos del turno 1 que sobreviven: {'nombre': True, 'hotel': True, 'cantidad': True, 'café': True, 'día': True, 'hora': True}
+
+==============================================================================
+MANTENER=6 · UMBRAL_TOKENS=500
+==============================================================================
+  turno  1:    96 tokens de entrada ·  2 mensajes
+  turno  2:   258 tokens de entrada ·  4 mensajes
+  turno  3:   480 tokens de entrada ·  6 mensajes
+  turno  4:   631 tokens de entrada ·  8 mensajes
+  turno  5:   860 tokens de entrada · 10 mensajes  (historial compactado)
+  turno  6:   879 tokens de entrada · 10 mensajes  (historial compactado)
+  turno  7:   831 tokens de entrada · 10 mensajes  (historial compactado)
+  turno  8:  1031 tokens de entrada · 10 mensajes  (historial compactado)
+  turno  9:  1205 tokens de entrada · 10 mensajes  (historial compactado)
+  turno 10:  1106 tokens de entrada · 10 mensajes  (historial compactado)
+  turno 11:  1218 tokens de entrada · 10 mensajes  (historial compactado)
+  turno 12:  1243 tokens de entrada · 10 mensajes  (historial compactado)
+
+  Respuesta al turno 12:
+  Perfecto, reviso el resumen:
+
+**Cliente:** Hotel Prado Suites
+
+**Lo que confirmaste:**
+- ✅ Interés en café de calidad
+- ✅ Cafetera 2 grupos (límite operativo)
+- ✅ Productos en evaluación: Etiopía, Blend Hostelería, Descafeinado Premium
+
+**Lo que FALTA (aún no confirmaste):**
+- ❌ Cantidad semanal exacta
+- ❌ Cuál de los cafés prefieres
+- ❌ Día y hora de entrega
+
+**Sinceridad:** No tenemos esos datos. Por eso los necesito ahora mismo para cerrar tu propuesta.
+
+¿Me los das?
+
+  Datos del turno 1 que sobreviven: {'nombre': False, 'hotel': True, 'cantidad': False, 'café': True, 'día': False, 'hora': False}
+
+==============================================================================
+MANTENER=6 · UMBRAL_TOKENS=3000
+==============================================================================
+  turno  1:    96 tokens de entrada ·  2 mensajes
+  turno  2:   244 tokens de entrada ·  4 mensajes
+  turno  3:   418 tokens de entrada ·  6 mensajes
+  turno  4:   540 tokens de entrada ·  8 mensajes
+  turno  5:   678 tokens de entrada · 10 mensajes
+  turno  6:   842 tokens de entrada · 12 mensajes
+  turno  7:   986 tokens de entrada · 14 mensajes
+  turno  8:  1117 tokens de entrada · 16 mensajes
+  turno  9:  1291 tokens de entrada · 18 mensajes
+  turno 10:  1435 tokens de entrada · 20 mensajes
+  turno 11:  1593 tokens de entrada · 22 mensajes
+  turno 12:  1686 tokens de entrada · 24 mensajes
+
+  Respuesta al turno 12:
+  Claro, Marta:
+
+- **Nombre:** Marta Gil
+- **Hotel:** Prado Suites (cliente 3)
+- **Producto:** 30 kg café Etiopía
+- **Frecuencia:** Semanal
+- **Entrega:** Martes antes de las 9:00
+
+¿Todo correcto?
+
+  Datos del turno 1 que sobreviven: {'nombre': True, 'hotel': True, 'cantidad': True, 'café': True, 'día': True, 'hora': True}
+
+==============================================================================
+MANTENER=6 · UMBRAL_TOKENS=1000000000
+==============================================================================
+  turno  1:    96 tokens de entrada ·  2 mensajes
+  turno  2:   238 tokens de entrada ·  4 mensajes
+  turno  3:   432 tokens de entrada ·  6 mensajes
+  turno  4:   546 tokens de entrada ·  8 mensajes
+  turno  5:   689 tokens de entrada · 10 mensajes
+  turno  6:   879 tokens de entrada · 12 mensajes
+  turno  7:  1044 tokens de entrada · 14 mensajes
+  turno  8:  1165 tokens de entrada · 16 mensajes
+  turno  9:  1335 tokens de entrada · 18 mensajes
+  turno 10:  1485 tokens de entrada · 20 mensajes
+  turno 11:  1596 tokens de entrada · 22 mensajes
+  turno 12:  1708 tokens de entrada · 24 mensajes
+
+  Respuesta al turno 12:
+  Claro, Marta:
+
+- **Tú**: Marta Gil, jefa de compras
+- **Hotel**: Prado Suites (cliente 3)
+- **Pedido**: 30 kg semanales
+- **Café**: Etiopía
+- **Entrega**: Martes antes de las 9:00
+
+¿Correcto? Solo me falta tu email para las facturas.
+
+  Datos del turno 1 que sobreviven: {'nombre': True, 'hotel': True, 'cantidad': True, 'café': True, 'día': True, 'hora': True}
+
+==============================================================================
+MANTENER=5 · UMBRAL_TOKENS=1000
+==============================================================================
+  turno  1:    96 tokens de entrada ·  2 mensajes
+  turno  2:   239 tokens de entrada ·  4 mensajes
+  turno  3:   426 tokens de entrada ·  6 mensajes
+  turno  4:   563 tokens de entrada ·  8 mensajes
+  turno  5:   718 tokens de entrada · 10 mensajes
+  turno  6:   921 tokens de entrada · 12 mensajes
+  turno  7:   833 tokens de entrada ·  9 mensajes  (historial compactado)
+  turno  8:  1057 tokens de entrada ·  9 mensajes  (historial compactado)
+  turno  9:  1059 tokens de entrada ·  9 mensajes  (historial compactado)
+  turno 10:  1117 tokens de entrada ·  9 mensajes  (historial compactado)
+  turno 11:  1272 tokens de entrada ·  9 mensajes  (historial compactado)
+  turno 12:  1280 tokens de entrada ·  9 mensajes  (historial compactado)
+  roles tras el último turno: uaauauaua
+
+  Respuesta al turno 12:
+  Disculpa, pero **no tengo esa información en el chat**.
+
+En esta conversación hemos hablado de:
+- 30 kg semanales
+- Etiopía Yirgacheffe
+- Entregas martes antes de 9:00
+- Limpieza de grupos
+- Opciones ecológicas
+
+**PERO ME FALTA:**
+- Tu nombre
+- Hotel/local
+- ¿Convencional o ecológica?
+- Confirmación final
+
+¿Me pasas esos datos para cerrar el pedido?
+
+  Datos del turno 1 que sobreviven: {'nombre': False, 'hotel': False, 'cantidad': True, 'café': True, 'día': True, 'hora': True}
+
+==============================================================================
+RESUMEN
+==============================================================================
+MANTENER     UMBRAL compact.  entrada  salida      USD turno 12  datos del turno 1
+       6       1000        5    12051    3482   0.0295     1120  6/6 
+       2       1000        3     9866    2799   0.0239      649  6/6 
+      10       1000        6    16231    4468   0.0386     1806  6/6 
+       6        500        8    14029    4609   0.0371     1243  2/6 (pierde: nombre, cantidad, día, hora)
+       6       3000        0    10926    1376   0.0178     1686  6/6 
+       6 1000000000        0    11213    1413   0.0183     1708  6/6 
+       5       1000        6    13266    4243   0.0345     1280  4/6 (pierde: nombre, hotel)

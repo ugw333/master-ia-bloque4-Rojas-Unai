@@ -1,0 +1,7 @@
+Búsqueda de texto del cliente 1 en los bytes de las BD tras el olvido, SIN secure_delete:
+  hilos.db: 67 apariciones de 'jueves', 71 de 'Bar La Esquina'
+  memoria.db: 1 apariciones de 'jueves', 1 de 'Bar La Esquina'
+
+Misma búsqueda CON secure_delete (tras repetir el protocolo desde BD vacías):
+  hilos.db: 0 apariciones de 'jueves', 0 de 'Bar La Esquina'
+  memoria.db: 0 apariciones de 'jueves', 0 de 'Bar La Esquina'

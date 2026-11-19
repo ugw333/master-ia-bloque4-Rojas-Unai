@@ -1,0 +1,26 @@
+P2 · herramienta ver_preferencias · pregunta 1 · intento 1: {'llamadas': 2, 'entrada': 1801, 'salida': 151, 'usa_dia': True, 'usa_producto': True, 'llamo_ver': True}
+P2 · herramienta ver_preferencias · pregunta 1 · intento 2: {'llamadas': 2, 'entrada': 1798, 'salida': 135, 'usa_dia': True, 'usa_producto': True, 'llamo_ver': True}
+P2 · herramienta ver_preferencias · pregunta 1 · intento 3: {'llamadas': 2, 'entrada': 1796, 'salida': 140, 'usa_dia': True, 'usa_producto': True, 'llamo_ver': True}
+P2 · herramienta ver_preferencias · pregunta 1 · intento 4: {'llamadas': 2, 'entrada': 1801, 'salida': 135, 'usa_dia': True, 'usa_producto': True, 'llamo_ver': True}
+P2 · herramienta ver_preferencias · pregunta 1 · intento 5: {'llamadas': 2, 'entrada': 1797, 'salida': 147, 'usa_dia': True, 'usa_producto': True, 'llamo_ver': True}
+P2 · herramienta ver_preferencias · pregunta 2 · intento 1: {'llamadas': 2, 'entrada': 1803, 'salida': 264, 'usa_dia': True, 'usa_producto': True, 'llamo_ver': True}
+P2 · herramienta ver_preferencias · pregunta 2 · intento 2: {'llamadas': 2, 'entrada': 1797, 'salida': 239, 'usa_dia': True, 'usa_producto': True, 'llamo_ver': True}
+P2 · herramienta ver_preferencias · pregunta 2 · intento 3: {'llamadas': 2, 'entrada': 1793, 'salida': 265, 'usa_dia': True, 'usa_producto': True, 'llamo_ver': True}
+P2 · herramienta ver_preferencias · pregunta 2 · intento 4: {'llamadas': 2, 'entrada': 1802, 'salida': 243, 'usa_dia': True, 'usa_producto': True, 'llamo_ver': True}
+P2 · herramienta ver_preferencias · pregunta 2 · intento 5: {'llamadas': 2, 'entrada': 1804, 'salida': 304, 'usa_dia': True, 'usa_producto': True, 'llamo_ver': True}
+P3 · prompt dinámico · pregunta 1 · intento 1: {'llamadas': 1, 'entrada': 824, 'salida': 81, 'usa_dia': True, 'usa_producto': True, 'llamo_ver': False}
+P3 · prompt dinámico · pregunta 1 · intento 2: {'llamadas': 1, 'entrada': 824, 'salida': 100, 'usa_dia': True, 'usa_producto': True, 'llamo_ver': False}
+P3 · prompt dinámico · pregunta 1 · intento 3: {'llamadas': 1, 'entrada': 824, 'salida': 78, 'usa_dia': True, 'usa_producto': True, 'llamo_ver': False}
+P3 · prompt dinámico · pregunta 1 · intento 4: {'llamadas': 1, 'entrada': 824, 'salida': 88, 'usa_dia': True, 'usa_producto': True, 'llamo_ver': False}
+P3 · prompt dinámico · pregunta 1 · intento 5: {'llamadas': 1, 'entrada': 824, 'salida': 79, 'usa_dia': True, 'usa_producto': True, 'llamo_ver': False}
+P3 · prompt dinámico · pregunta 2 · intento 1: {'llamadas': 1, 'entrada': 817, 'salida': 97, 'usa_dia': True, 'usa_producto': False, 'llamo_ver': False}
+P3 · prompt dinámico · pregunta 2 · intento 2: {'llamadas': 1, 'entrada': 817, 'salida': 127, 'usa_dia': True, 'usa_producto': True, 'llamo_ver': False}
+P3 · prompt dinámico · pregunta 2 · intento 3: {'llamadas': 1, 'entrada': 817, 'salida': 84, 'usa_dia': True, 'usa_producto': True, 'llamo_ver': False}
+P3 · prompt dinámico · pregunta 2 · intento 4: {'llamadas': 1, 'entrada': 817, 'salida': 85, 'usa_dia': True, 'usa_producto': False, 'llamo_ver': False}
+P3 · prompt dinámico · pregunta 2 · intento 5: {'llamadas': 1, 'entrada': 817, 'salida': 88, 'usa_dia': True, 'usa_producto': False, 'llamo_ver': False}
+
+==============================================================================
+Versión                               acierta llamó ver llamadas  entrada  salida
+P2 · herramienta ver_preferencias       10/10     10/10      2.0     1799     202
+P3 · prompt dinámico                    10/10      0/10      1.0      820      91
+(llamadas y tokens: media por conversación)

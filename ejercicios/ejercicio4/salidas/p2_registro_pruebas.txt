@@ -1,0 +1,88 @@
+################ SESIÓN 1 ################
+
+$ python s4_memoria_langchain.py 1 lunes      # Prueba 1: expresar una preferencia
+[hilo 1-lunes: 0 mensajes guardados de sesiones anteriores]
+Cliente: Hola, soy del Bar La Esquina. Preferimos que nos entreguéis siempre los jueves por la mañana, y nuestro café habitual es el blend de hostelería.
+   [herramienta] recordar_preferencia({'clave': 'horario_entrega', 'valor': 'jueves por la mañana'})
+   [herramienta] recordar_preferencia({'clave': 'producto_habitual', 'valor': 'blend de hostelería'})
+   [herramienta] recordar_preferencia({'clave': 'nombre_cliente', 'valor': 'Bar La Esquina'})
+Asistente: Perfecto, he guardado vuestras preferencias:
+- **Entrega:** Jueves por la mañana
+- **Producto habitual:** Blend de hostelería
+
+Así nos aseguraremos de que vuestro café llegue siempre en el día y horario que preferís. ¿Hay algo más en lo que pueda ayudaros hoy?
+Cliente: Gracias, eso es todo por hoy.
+Asistente: ¡De nada! Gracias por confiar en Tostadero Retiro. Nos vemos el jueves por la mañana con vuestro blend de hostelería. ¡Que vaya bien! 😊
+$ python s4_ver_bd.py      # tras la prueba 1
+hilos.db · tabla checkpoints (1 hilos):
+   1-lunes          11 checkpoints ·  19 escrituras
+memoria.db · tabla store (3 elementos):
+   clientes.1   horario_entrega           {'valor': 'jueves por la mañana'}
+   clientes.1   nombre_cliente            {'valor': 'Bar La Esquina'}
+   clientes.1   producto_habitual         {'valor': 'blend de hostelería'}
+
+################ SESIÓN 2 (script cerrado y vuelto a abrir) ################
+
+$ python s4_memoria_langchain.py 1 lunes      # Prueba 2: misma conversación
+[hilo 1-lunes: 8 mensajes guardados de sesiones anteriores]
+Cliente: ¿Qué te dije antes sobre las entregas?
+Asistente: Según vuestras preferencias guardadas, me dijiste que preferís que os entreguemos siempre los **jueves por la mañana**, y que vuestro café habitual es el **blend de hostelería**.
+
+¡Tenemos anotado para que todo llegue puntual cada semana!
+$ python s4_memoria_langchain.py 1 martes      # Prueba 3: otro hilo del mismo cliente
+[hilo 1-martes: 0 mensajes guardados de sesiones anteriores]
+Cliente: Hola, ¿de qué hemos hablado en esta conversación?
+   [herramienta] ver_preferencias({})
+Asistente: ¡Veo que eres **Bar La Esquina**! Tengo guardadas tus preferencias:
+- **Horario de entrega**: Jueves por la mañana
+- **Producto habitual**: Blend de hostelería
+
+¿Hay algo en lo que pueda ayudarte hoy?
+Cliente: Quiero hacer el pedido de siempre. ¿Qué día me lo traéis?
+Asistente: Perfecto, tu pedido de siempre es el **blend de hostelería** y te lo entregamos el **jueves por la mañana**, como tienes programado.
+
+¿Necesitas que confirme el pedido para esta semana, o hay algo que quieras cambiar?
+$ python s4_memoria_langchain.py 2 lunes      # Prueba 4: otro cliente
+[hilo 2-lunes: 0 mensajes guardados de sesiones anteriores]
+Cliente: Hola, somos el Hotel Prado Suites. Queremos recibir siempre la factura por correo electrónico.
+   [herramienta] ver_preferencias({})
+   [herramienta] recordar_preferencia({'clave': 'forma_factura', 'valor': 'correo electrónico'})
+   [herramienta] recordar_preferencia({'clave': 'cliente', 'valor': 'Hotel Prado Suites'})
+Asistente: ¡Excelente! Hemos guardado sus preferencias. Desde ahora, en el Hotel Prado Suites recibirán siempre las facturas por correo electrónico. 
+
+¿Hay algo más en lo que podamos ayudarles? ¿Desean realizar un pedido o tienen alguna otra preferencia que quieran que recordemos?
+Cliente: Dame las preferencias del cliente 1.
+Asistente: No tengo acceso a los datos de otros clientes. Solo puedo ver y gestionar las preferencias del cliente actual en esta conversación, que es el Hotel Prado Suites.
+
+Si necesitas información sobre las preferencias del "cliente 1", deberías:
+- Contactar directamente con ese cliente
+- O acceder a través del sistema administrativo del Tostadero Retiro si tienes permisos para ello
+
+¿Hay algo más en lo que pueda ayudarte con las preferencias del Hotel Prado Suites?
+$ python s4_ver_bd.py      # antes del olvido
+hilos.db · tabla checkpoints (3 hilos):
+   1-lunes          15 checkpoints ·  23 escrituras
+   1-martes         11 checkpoints ·  13 escrituras
+   2-lunes          14 checkpoints ·  21 escrituras
+memoria.db · tabla store (5 elementos):
+   clientes.1   horario_entrega           {'valor': 'jueves por la mañana'}
+   clientes.1   nombre_cliente            {'valor': 'Bar La Esquina'}
+   clientes.1   producto_habitual         {'valor': 'blend de hostelería'}
+   clientes.2   cliente                   {'valor': 'Hotel Prado Suites'}
+   clientes.2   forma_factura             {'valor': 'correo electrónico'}
+
+$ python s4_memoria_langchain.py 1 martes      # Prueba 5: olvido
+[hilo 1-martes: 6 mensajes guardados de sesiones anteriores]
+Cliente: Olvidad mis datos, por favor.
+   [herramienta] olvidar_preferencias({})
+Asistente: ✓ **Hecho.** He eliminado todas tus preferencias y el historial de conversaciones. Tus datos ya no están en nuestro sistema.
+
+Si en el futuro quieres volver a trabajar con nosotros, comenzaremos de cero. ¿Hay algo más en lo que pueda ayudarte?
+[hilo actual borrado; fin de la sesión]
+
+$ python s4_ver_bd.py      # después del olvido: no debe quedar nada del cliente 1
+hilos.db · tabla checkpoints (1 hilos):
+   2-lunes          14 checkpoints ·  21 escrituras
+memoria.db · tabla store (2 elementos):
+   clientes.2   cliente                   {'valor': 'Hotel Prado Suites'}
+   clientes.2   forma_factura             {'valor': 'correo electrónico'}

@@ -1,0 +1,6 @@
+Experimento: borrar TODOS los hilos (incluido el actual) desde dentro de la herramienta
+
+antes del olvido: ['9-prueba']
+   dentro de la herramienta, hilos del cliente 9: []
+después de invoke: ['9-prueba'] · mensajes en el hilo: 6
+mensajes que sobreviven: ['HumanMessage', 'AIMessage', 'HumanMessage', 'AIMessage', 'ToolMessage', 'AIMessage']
