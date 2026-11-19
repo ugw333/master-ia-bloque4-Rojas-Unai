@@ -15,7 +15,6 @@ cliente = openai.OpenAI(base_url="https://openrouter.ai/api/v1",
 
 def preguntar_gemini(pregunta: str, max_vueltas: int = 5, metricas: dict | None = None) -> str:
     metricas = nuevas_metricas() if metricas is None else metricas
-    # Diferencia con OpenAI/Claude: el sistema va como primer mensaje de la lista
     mensajes: list = [{"role": "system", "content": SISTEMA},
                       {"role": "user", "content": pregunta}]
     for vuelta in range(1, max_vueltas + 1):
@@ -28,12 +27,11 @@ def preguntar_gemini(pregunta: str, max_vueltas: int = 5, metricas: dict | None 
         print(f"[vuelta {vuelta}] tokens: {r.usage.prompt_tokens} entrada / {r.usage.completion_tokens} salida")
         mensaje = r.choices[0].message
         mensajes.append(mensaje)
-        if not mensaje.tool_calls:  # sin llamadas pendientes: es la respuesta final
+        if not mensaje.tool_calls:
             return mensaje.content or ""
-        for llamada in mensaje.tool_calls:  # los argumentos llegan como texto JSON
+        for llamada in mensaje.tool_calls:
             resultado = ejecutar_herramienta(llamada.function.name,
                                              json.loads(llamada.function.arguments), metricas)
-            # Un mensaje "tool" por cada llamada
             mensajes.append({
                 "role": "tool",
                 "tool_call_id": llamada.id,

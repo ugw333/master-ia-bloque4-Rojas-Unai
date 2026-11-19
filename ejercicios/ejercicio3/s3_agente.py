@@ -29,19 +29,15 @@ def preguntar_en_consola(nombre: str, args: dict) -> bool:
 
 class Agente:
     def __init__(self, sistema: str, herramientas: list[Herramienta], max_pasos: int = 8,
-                 aprobador: Callable[[str, dict], bool] = preguntar_en_consola,
-                 verbose: bool = True):
+                 aprobador: Callable = preguntar_en_consola, verbose: bool = True):
         self.llm = anthropic.Anthropic(max_retries=3)
         self.modelo = os.environ["ANTHROPIC_MODEL"]
         self.sistema, self.max_pasos = sistema, max_pasos
         self.herramientas = {h.nombre: h for h in herramientas}
         self.aprobador, self.verbose = aprobador, verbose
-        # Métricas de la última ejecución (P4: medir cuánto cuesta el camino agéntico)
         self.llamadas = self.tokens_entrada = self.tokens_salida = 0
-        self.traza: list[str] = []
 
     def _log(self, linea: str):
-        self.traza.append(linea)
         if self.verbose:
             print(linea)
 
@@ -60,12 +56,10 @@ class Agente:
             salida = h.funcion(**args)
         except Exception as e:  # argumentos inventados, fallo de BD...
             return f"Error al ejecutar {nombre}: {e}", True
-        # Errores de negocio devueltos como dato ({"error": ...}) también se marcan como error
         return salida, isinstance(salida, dict) and "error" in salida
 
     def ejecutar(self, objetivo: str) -> str:
         self.llamadas = self.tokens_entrada = self.tokens_salida = 0
-        self.traza = []
         mensajes: list = [{"role": "user", "content": objetivo}]
         for paso in range(1, self.max_pasos + 1):
             r = self.llm.messages.create(
@@ -107,11 +101,9 @@ Procedimiento:
 
 
 def crear_herramientas(definiciones: list[dict] = DEFINICIONES) -> list[Herramienta]:
-    return [
-        Herramienta(d["name"], d["description"], d["parameters"], FUNCIONES[d["name"]],
-                    requiere_aprobacion=(d["name"] == "crear_incidencia"))
-        for d in definiciones
-    ]
+    return [Herramienta(d["name"], d["description"], d["parameters"], FUNCIONES[d["name"]],
+                        requiere_aprobacion=(d["name"] == "crear_incidencia"))
+            for d in definiciones]
 
 
 if __name__ == "__main__":
@@ -119,5 +111,5 @@ if __name__ == "__main__":
     correo = ("Buenas, os escribo del Restaurante Lumbre. La cafetera de dos grupos no "
               "calienta y hoy no podemos servir cafés. ¿Además, cuándo llega el pedido pendiente?")
     print(agente.ejecutar(correo))
-    print(f"\n[métricas] {agente.llamadas} llamadas, "
-          f"{agente.tokens_entrada} tokens de entrada, {agente.tokens_salida} de salida")
+    print(f"\n{agente.llamadas} llamadas, {agente.tokens_entrada} tokens de entrada, "
+          f"{agente.tokens_salida} de salida")

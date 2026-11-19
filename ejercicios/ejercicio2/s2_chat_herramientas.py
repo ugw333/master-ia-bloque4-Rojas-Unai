@@ -14,19 +14,17 @@ SISTEMA = ("Eres el asistente interno de Tostadero Retiro. Usa las herramientas 
 
 
 def nuevas_metricas() -> dict:
-    """Lo que medimos en P4 para comparar proveedores."""
     return {"vueltas": 0, "herramientas": [], "tokens_entrada": 0, "tokens_salida": 0}
 
 
 def ejecutar_herramienta(nombre: str, args: dict, metricas: dict) -> object:
-    """Común a los tres proveedores: ejecuta, traza y devuelve el error como dato."""
     metricas["herramientas"].append(f"{nombre}({args})")
     if nombre not in FUNCIONES:
         resultado = {"error": f"La herramienta {nombre} no existe."}
     else:
         try:
             resultado = FUNCIONES[nombre](**args)
-        except Exception as e:  # argumentos inventados, fallo de BD...
+        except Exception as e:
             resultado = {"error": f"{type(e).__name__}: {e}"}
     print(f"  -> {nombre}({args}) = {str(resultado)[:80]}")
     return resultado
@@ -58,7 +56,6 @@ def preguntar(pregunta: str, max_vueltas: int = 5, metricas: dict | None = None)
     return "No he podido completar la consulta en el número de pasos permitido."
 
 
-# Las cuatro preguntas de P3 (también las usan s2_chat_claude.py y s2_chat_gemini.py)
 PREGUNTAS = [
     "¿Qué pedidos pendientes tiene el Bar La Esquina y cuánto suman?",
     "¿Cuánto stock queda de descafeinado?",

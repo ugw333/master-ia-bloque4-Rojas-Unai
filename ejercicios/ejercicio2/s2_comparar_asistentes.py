@@ -1,6 +1,4 @@
-"""Sesión 2 · P4. Compara el asistente con herramientas en OpenAI, Claude y Gemini.
-
-Las cuatro preguntas de P3 en los tres proveedores; imprime la traza y la tabla de P4."""
+"""Sesión 2 · P4. Las cuatro preguntas de P3 con OpenAI, Claude y Gemini."""
 from s2_chat_claude import preguntar_claude
 from s2_chat_gemini import preguntar_gemini
 from s2_chat_herramientas import PREGUNTAS, nuevas_metricas, preguntar

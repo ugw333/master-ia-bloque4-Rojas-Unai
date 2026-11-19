@@ -1,7 +1,6 @@
-"""Sesión 3 · P2. Experimentos con el agente: los cinco de la tabla del enunciado.
+"""Sesión 3 · P2. Experimentos con el agente.
 
-Cada experimento cambia una sola cosa (límite, aprobación, descripción o prompt) y
-guarda la traza. Uso: python s3_experimentos.py [1-5]   (sin argumento: todos)"""
+Uso: python s3_experimentos.py [1-5]   (sin argumento: todos)"""
 import sys
 
 from herramientas import DEFINICIONES, _consulta
@@ -12,10 +11,6 @@ CORREO_LUMBRE = ("Buenas, os escribo del Restaurante Lumbre. La cafetera de dos 
 CORREO_AGOSTO = "¿Revisáis las máquinas en agosto?"
 CORREO_REVISION = ("Hola, somos Bar La Esquina. ¿Revisáis las máquinas en agosto? Nos gustaría "
                    "que le echarais un ojo a la cafetera de 2 grupos antes de las vacaciones.")
-
-FRASE_GUARDA = " Úsala solo si el cliente describe una avería concreta."
-PASO_1 = "1. Identifica al cliente con buscar_cliente antes de usar su id.\n"
-REGLA_BUSCAR = " Úsala antes de cualquier otra herramienta que pida cliente_id."
 
 
 def aprobar(nombre, args):
@@ -28,22 +23,24 @@ def rechazar(nombre, args):
     return False
 
 
-def num_incidencias() -> int:
-    return _consulta("SELECT COUNT(*) AS n FROM incidencias")[0]["n"]
+def sin_frase(nombre: str, frase: str) -> list[dict]:
+    return [dict(d, description=d["description"].replace(frase, "")) if d["name"] == nombre else d
+            for d in DEFINICIONES]
 
 
 def correr(titulo: str, agente: Agente, correo: str):
-    print(f"\n{'=' * 78}\n{titulo}\n{'=' * 78}\nCorreo: {correo}\n")
-    antes = num_incidencias()
+    print(f"\n=== {titulo}\nCorreo: {correo}\n")
+    antes = _consulta("SELECT COUNT(*) AS n FROM incidencias")[0]["n"]
     respuesta = agente.ejecutar(correo)
-    print(f"\n--- Respuesta al cliente ---\n{respuesta}\n")
-    print(f"[métricas] {agente.llamadas} llamadas · {agente.tokens_entrada}+{agente.tokens_salida} "
-          f"tokens · incidencias creadas: {num_incidencias() - antes}")
+    despues = _consulta("SELECT COUNT(*) AS n FROM incidencias")[0]["n"]
+    print(f"\nRespuesta al cliente:\n{respuesta}\n")
+    print(f"{agente.llamadas} llamadas · {agente.tokens_entrada}+{agente.tokens_salida} tokens · "
+          f"incidencias creadas: {despues - antes}")
 
 
 def exp1():
-    correr("EXP 1 · Correo de ejemplo (se aprueba la incidencia)",
-           Agente(SISTEMA, crear_herramientas(), aprobador=aprobar), CORREO_LUMBRE)
+    correr("EXP 1 · Correo de ejemplo", Agente(SISTEMA, crear_herramientas(), aprobador=aprobar),
+           CORREO_LUMBRE)
 
 
 def exp2():
@@ -52,37 +49,29 @@ def exp2():
 
 
 def exp3():
-    correr("EXP 3 · El humano rechaza la incidencia",
+    correr("EXP 3 · Se rechaza la incidencia",
            Agente(SISTEMA, crear_herramientas(), aprobador=rechazar), CORREO_LUMBRE)
 
 
 def exp4():
-    # Control: descripción original. Variante: sin la frase que limita su uso.
-    correr("EXP 4a · '¿Revisáis las máquinas en agosto?' con la descripción ORIGINAL",
+    sin_guarda = sin_frase("crear_incidencia", " Úsala solo si el cliente describe una avería concreta.")
+    correr("EXP 4a · Agosto, descripción original",
            Agente(SISTEMA, crear_herramientas(), aprobador=aprobar), CORREO_AGOSTO)
-    sin_guarda = [dict(d, description=d["description"].replace(FRASE_GUARDA, ""))
-                  if d["name"] == "crear_incidencia" else d for d in DEFINICIONES]
-    assert sin_guarda != DEFINICIONES, "no se ha encontrado la frase a quitar"
-    correr("EXP 4b · Mismo correo SIN 'Úsala solo si el cliente describe una avería'",
+    correr("EXP 4b · Agosto, sin la frase",
            Agente(SISTEMA, crear_herramientas(sin_guarda), aprobador=aprobar), CORREO_AGOSTO)
-    # Variante más tentadora: hay cliente identificable y se menciona una máquina concreta
-    for etiqueta, defs in [("ORIGINAL", DEFINICIONES), ("SIN la frase", sin_guarda)]:
-        correr(f"EXP 4c · Revisión preventiva con cliente y máquina, descripción {etiqueta}",
-               Agente(SISTEMA, crear_herramientas(defs), aprobador=aprobar), CORREO_REVISION)
+    correr("EXP 4c · Revisión con cliente, descripción original",
+           Agente(SISTEMA, crear_herramientas(), aprobador=aprobar), CORREO_REVISION)
+    correr("EXP 4c · Revisión con cliente, sin la frase",
+           Agente(SISTEMA, crear_herramientas(sin_guarda), aprobador=aprobar), CORREO_REVISION)
 
 
 def exp5():
-    sistema_sin_paso1 = SISTEMA.replace(PASO_1, "")
-    assert sistema_sin_paso1 != SISTEMA, "no se ha encontrado el paso 1"
-    correr("EXP 5a · SISTEMA sin el paso 1 (identificar al cliente)",
-           Agente(sistema_sin_paso1, crear_herramientas(), aprobador=aprobar), CORREO_LUMBRE)
-    # La misma regla está repetida en la descripción de buscar_cliente: la quitamos también
-    sin_regla = [dict(d, description=d["description"].replace(REGLA_BUSCAR, ""))
-                 if d["name"] == "buscar_cliente" else d for d in DEFINICIONES]
-    assert sin_regla != DEFINICIONES, "no se ha encontrado la regla de buscar_cliente"
-    correr("EXP 5b · Sin paso 1 NI la regla en la descripción de buscar_cliente",
-           Agente(sistema_sin_paso1, crear_herramientas(sin_regla), aprobador=aprobar),
-           CORREO_LUMBRE)
+    sistema = SISTEMA.replace("1. Identifica al cliente con buscar_cliente antes de usar su id.\n", "")
+    sin_regla = sin_frase("buscar_cliente", " Úsala antes de cualquier otra herramienta que pida cliente_id.")
+    correr("EXP 5a · Sin el paso 1",
+           Agente(sistema, crear_herramientas(), aprobador=aprobar), CORREO_LUMBRE)
+    correr("EXP 5b · Sin el paso 1 ni la regla de buscar_cliente",
+           Agente(sistema, crear_herramientas(sin_regla), aprobador=aprobar), CORREO_LUMBRE)
 
 
 EXPERIMENTOS = {"1": exp1, "2": exp2, "3": exp3, "4": exp4, "5": exp5}

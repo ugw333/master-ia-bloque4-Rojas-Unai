@@ -63,7 +63,6 @@ if __name__ == "__main__":
             ok = input(f"¿Aprobar {peticion['name']}({peticion['args']})? [s/N] ").lower() == "s"
             decisiones.append({"type": "approve" if ok else "reject"})
         estado = agente.invoke(Command(resume={"decisions": decisiones}), config)
-    # Traza: la reconstruimos a posteriori a partir del estado del grafo
     for m in estado["messages"]:
         for llamada in getattr(m, "tool_calls", []) or []:
             print(f"[traza] {llamada['name']}({llamada['args']})")

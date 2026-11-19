@@ -24,20 +24,18 @@ def preguntar_claude(pregunta: str, max_vueltas: int = 5, metricas: dict | None 
         metricas["tokens_entrada"] += r.usage.input_tokens
         metricas["tokens_salida"] += r.usage.output_tokens
         print(f"[vuelta {vuelta}] tokens: {r.usage.input_tokens} entrada / {r.usage.output_tokens} salida")
-        # Diferencia con OpenAI: el turno del asistente se devuelve entero como "content"
         mensajes.append({"role": "assistant", "content": r.content})
         llamadas = [b for b in r.content if b.type == "tool_use"]
-        if not llamadas:  # stop_reason != "tool_use": es la respuesta final
+        if not llamadas:
             return "".join(b.text for b in r.content if b.type == "text")
         resultados = []
         for llamada in llamadas:
-            resultado = ejecutar_herramienta(llamada.name, llamada.input, metricas)  # input ya es dict
+            resultado = ejecutar_herramienta(llamada.name, llamada.input, metricas)
             resultados.append({
                 "type": "tool_result",
                 "tool_use_id": llamada.id,
                 "content": json.dumps(resultado, ensure_ascii=False, default=str),
             })
-        # Todos los resultados van juntos en un único mensaje "user"
         mensajes.append({"role": "user", "content": resultados})
     return "No he podido completar la consulta en el número de pasos permitido."
 

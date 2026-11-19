@@ -69,46 +69,41 @@ def con_gemini(correo: str) -> CorreoClasificado:
     )
     return r.choices[0].message.parsed
 
-# Conjunto de evaluación: (correo, tipo esperado). 18 casos, con ironía, dos clientes,
-# inglés, sin nombre de negocio y clientes que no existen en la BD.
+# (correo, tipo esperado)
 CASOS = [
-    # Casos del kit
     ("Necesito 20 kg del blend de hostelería para el viernes. Bar La Esquina.", "pedido"),
     ("El molino hace un ruido raro desde ayer, ¿podéis venir?", "incidencia"),
     ("¿Tenéis café descafeinado de especialidad?", "consulta"),
     ("Mandadme 5 kg de Etiopía y, de paso, la cafetera gotea. Lumbre.", "mixto"),
     ("URGENTE: sin café para mañana, 10 kg de blend. Hotel Prado Suites", "pedido"),
     ("Buenas, ¿la factura de septiembre ya está emitida?", "consulta"),
-    # Ironía
+    # ironía
     ("Genial, otra vez la cafetera sin presión. Me encanta empezar así el lunes. "
      "Cafetería Atocha 12", "incidencia"),
     ("Qué maravilla, se nos ha acabado el blend justo el sábado. Mandad 15 kg. "
      "Panadería Ibiza", "pedido"),
-    # Dos clientes en el mismo correo
+    # dos clientes
     ("Desde Bar La Esquina, y en nombre también del Restaurante Lumbre: queremos 10 kg "
      "de blend cada uno.", "pedido"),
-    # En inglés
+    # inglés
     ("Hi, this is Hotel Prado Suites. Our grinder stopped working this morning and we "
      "can't serve coffee. Can someone come today?", "incidencia"),
     ("Do you ship decaf beans outside Madrid?", "consulta"),
-    # Sin nombre de negocio
+    # sin nombre
     ("Necesito 3 kg de Etiopía para mañana.", "pedido"),
     ("URGENTE: la máquina echa humo por detrás.", "incidencia"),
-    # Clientes que no están en la BD (deben saltar la alerta)
+    # clientes que no existen
     ("Somos Café Central, queremos 8 kg de blend para el lunes.", "pedido"),
     ("Cafetería Nube aquí: la cafetera pierde agua por abajo.", "incidencia"),
-    # Ambiguos
-    # Etiqueta corregida tras la 1.ª ejecución: pregunta + pedido es "mixto", no "pedido"
-    ("¿Cuánto cuesta el descafeinado? Y apuntadme 2 kg. Bar La Esquina", "mixto"),
+    # ambiguos
+    ("¿Cuánto cuesta el descafeinado? Y apuntadme 2 kg. Bar La Esquina", "mixto"),  # antes "pedido"
     ("¿Qué precio tiene la cafetera de 2 grupos?", "consulta"),
     ("Lumbre: el pedido de ayer llegó con una bolsa rota.", "incidencia"),
 ]
 
 
 def validar_negocio(r: CorreoClasificado) -> list[str]:
-    """El esquema garantiza la forma, no que tenga sentido. Devuelve los avisos."""
-    avisos = [f"cantidad no válida: {l.producto} = {l.cantidad}"
-              for l in r.lineas if l.cantidad <= 0]
+    avisos = [f"cantidad no válida: {l.producto} = {l.cantidad}" for l in r.lineas if l.cantidad <= 0]
     if r.cliente and not buscar_cliente(r.cliente):
         avisos.append(f"el cliente '{r.cliente}' no existe en la base de datos")
     return avisos
@@ -120,13 +115,13 @@ if __name__ == "__main__":
         for i, (correo, esperado) in enumerate(CASOS, 1):
             try:
                 resultado = extraer(correo)
-            except Exception as e:  # salida estructurada vacía, error de red...
-                fallos.append(f"caso {i}: error {type(e).__name__}: {e}")
+            except Exception as e:
+                fallos.append(f"caso {i}: error {e}")
                 continue
-            aciertos += resultado.tipo == esperado
-            if resultado.tipo != esperado:
-                fallos.append(f"caso {i}: esperado {esperado}, obtenido {resultado.tipo} "
-                              f"({resultado.resumen})")
+            if resultado.tipo == esperado:
+                aciertos += 1
+            else:
+                fallos.append(f"caso {i}: esperado {esperado}, obtenido {resultado.tipo} ({resultado.resumen})")
             for aviso in validar_negocio(resultado):
                 print(f"  [{nombre}] caso {i}: AVISO {aviso}")
         print(f"{nombre}: {aciertos}/{len(CASOS)} tipos correctos")
